@@ -10,22 +10,22 @@ The system operates via a tightly integrated security and operational pipeline:
 
 ```mermaid
 graph TD
-    User([NOC Operator]) -->|User Query| API[POST /api/v1/query]
-    API -->|Step 1| Guard{Prompt Injection Guard}
-    Guard -->|Blocked| Block[400 Bad Request / SECURITY_BLOCKED]
-    Guard -->|Clean| Cache{Memory & Redis Cache}
-    Cache -->|Cache Hit| ReturnCache[Return Instantly / cache_hit: true]
-    Cache -->|Cache Miss| LLM[LLM Intent Extraction]
-    LLM -->|3x Retries Failed| Error503[503 Service Unavailable]
-    LLM -->|Valid Intent JSON| Pydantic{Pydantic Validation}
-    Pydantic -->|Invalid Filters| Error400[400 Bad Request]
-    Pydantic -->|Valid Filters| RBAC{RBAC Whitelist Check}
-    RBAC -->|Forbidden| Error403[403 Forbidden]
-    RBAC -->|Authorized| SQL[SQL query builder]
-    SQL -->|Database Query| DB[(PostgreSQL DB)]
-    DB -->|Raw Rows| Formatter[Local Python Formatter]
-    Formatter -->|Formatted MD String| CacheSave[Cache Payload]
-    CacheSave -->|Return Response| ReturnFinal[Response / cache_hit: false]
+    User(["NOC Operator"]) -->|User Query| API["POST /api/v1/query"]
+    API -->|Step 1| Guard{"Prompt Injection Guard"}
+    Guard -->|Blocked| Block["400 Bad Request / SECURITY_BLOCKED"]
+    Guard -->|Clean| Cache{"Memory and Redis Cache"}
+    Cache -->|Cache Hit| ReturnCache["Return Instantly / cache_hit: true"]
+    Cache -->|Cache Miss| LLM["LLM Intent Extraction"]
+    LLM -->|3x Retries Failed| Error503["503 Service Unavailable"]
+    LLM -->|Valid Intent JSON| Pydantic{"Pydantic Validation"}
+    Pydantic -->|Invalid Filters| Error400["400 Bad Request"]
+    Pydantic -->|Valid Filters| RBAC{"RBAC Whitelist Check"}
+    RBAC -->|Forbidden| Error403["403 Forbidden"]
+    RBAC -->|Authorized| SQL["SQL query builder"]
+    SQL -->|Database Query| DB[("PostgreSQL DB")]
+    DB -->|Raw Rows| Formatter["Local Python Formatter"]
+    Formatter -->|Formatted MD String| CacheSave["Cache Payload"]
+    CacheSave -->|Return Response| ReturnFinal["Response / cache_hit: false"]
 ```
 
 ---

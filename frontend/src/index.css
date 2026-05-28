@@ -1,0 +1,28 @@
+/* src/index.css */
+@import "tailwindcss";
+
+/* Custom thin scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #334155;
+  /* slate-700 */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #64748b;
+  /* slate-500 */
+  border-radius: 3px;
+  border: 1px solid #1e293b;
+  /* slate-800 */
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  overflow: hidden;
+}
